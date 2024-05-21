@@ -16,7 +16,7 @@ counter_clockwise_rotation_matrix = rotation_matrix(-rotation_rad)
 class car:
     def __init__(self, position, direction = np.zeros((2), dtype = float), *args, **kwargs) -> None:
         self.position = position
-        self.direction = direction
+        self.direction = normalize_vector(direction)
         self.velocity = np.zeros((2), dtype = float)
         
         self.distance = 0
@@ -24,7 +24,7 @@ class car:
         self.rotate_func = [self.turn_right, self.turn_left, self.do_nothing]
         self.accel_func = [self.acceleration, self.deceleration, self.do_nothing]
         
-        if kwargs['parent']:
+        if 'parent' in kwargs:
             self.weights_rotate = kwargs['parent'].weights_rotate + np.random.normal(0, 1, (3,5))
             self.biases_rotate = kwargs['parent'].biases_rotate + np.random.normal(0, 1, 3)
             self.weights_accel = kwargs['parent'].weights_accel + np.random.normal(0, 1, (3,5))
@@ -45,7 +45,7 @@ class car:
         self.accel_func[np.argmax(self.values_accel)]()
         
         self.position += self.velocity
-        self.distance += np.lianlg.norm(self.velocity)
+        self.distance += np.linalg.norm(self.velocity)
             
     def acceleration(self):
         self.velocity += self.direction * ACC
@@ -69,9 +69,14 @@ class envirnoment:
     def __init__(self, points : list) -> None:
         self.roads = np.array((points, points[1:]+points[:1]))
         self.roads = np.rot90(self.roads, 3)
+        print(self.roads)
         
         self.init_position = self.roads[0,0]
         self.init_direction = normalize_vector(self.roads[0,1] - self.roads[0,0])
         self.cars = []
         for i in range(20):
             self.cars.append(car(self.init_position, self.init_direction))
+            
+
+if __name__ == "__main__":
+    envirnoment([[1,2],[2,3],[3,4],[4,5]])
