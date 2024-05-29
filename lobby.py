@@ -28,7 +28,7 @@ def draw_circle(event, x, y, flags, param):
         drawing = False
         end_point = (x, y)
         # 반지름 계산
-        radius = int(np.sqrt((end_point[0] - start_point[0])**2 + (end_point[1] - start_point[1])**2))
+        radius = 60 + int(np.sqrt((end_point[0] - start_point[0])**2 + (end_point[1] - start_point[1])**2))
         # 원 정보 저장
         circles.append((start_point + [radius]))
 
@@ -53,7 +53,7 @@ while True:
 
     # 현재 드래그 중인 동그라미 그리기
     if drawing and start_point and end_point:
-        temp_radius = int(np.sqrt((end_point[0] - start_point[0])**2 + (end_point[1] - start_point[1])**2))
+        temp_radius = 60 + int(np.sqrt((end_point[0] - start_point[0])**2 + (end_point[1] - start_point[1])**2))
         cv2.circle(img_copy, start_point, temp_radius, (0, 0, 0), 2)
 
     # 이미지 표시
