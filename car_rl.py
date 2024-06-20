@@ -213,7 +213,7 @@ class enviroment:
         self.road_map = np.full((self.image_height, self.image_width, 3), 255,dtype=np.uint8)
         print(self.walls)
         for wall in self.walls:
-            cv2.line(self.road_map, np.int0(wall[0]), np.int0(wall[1]), (0,0,0), 1)
+            cv2.line(self.road_map, np.intp(wall[0]), np.intp(wall[1]), (0,0,0), 1)
 
         self.cars_n = cars_num
 
@@ -234,7 +234,7 @@ class enviroment:
 
             # RotatedRect에서 4개의 꼭짓점 계산
             box = cv2.boxPoints(rotated_rect)
-            box = np.int0(box)
+            box = np.intp(box)
 
             # 사각형 그리기
             cv2.drawContours(image, [box], 0, (0, 255, 0), 2)
@@ -251,7 +251,7 @@ class enviroment:
             cv2.putText(image, number, (text_x, text_y), font, font_scale, (0, 0, 0), font_thickness)
 
             for sense_line in car.sense_lines:
-                cv2.line(image, np.int0(car.position), np.int0(sense_line), (125,125,125), 1)
+                cv2.line(image, np.intp(car.position), np.intp(sense_line), (125,125,125), 1)
             
         cv2.imshow(self.window_name, image)
 
